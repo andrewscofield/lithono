@@ -1,0 +1,152 @@
+import { test, expect, type Page } from '@playwright/test';
+
+async function ready(page: Page) {
+  await expect(page.locator('[data-lithono-page]')).toHaveCount(1);
+  await expect(page.locator('[defer-hydration]')).toHaveCount(0);
+}
+
+test('real lists demo creates, updates, navigates and deletes tasks without duplicate markup or page reloads', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', error => errors.push(error.message));
+  page.on('dialog', dialog => dialog.accept());
+  await page.goto('/lists');
+  await ready(page);
+  await page.getByLabel('New list').fill('Regression errands');
+  await page.getByRole('button', { name: 'Add list', exact: true }).click();
+  await expect(page).toHaveURL(/\/lists\/[^/]+$/);
+  await ready(page);
+  const listUrl = page.url();
+  await page.getByLabel('New task').fill('Check progressive task updates');
+  const added = page.waitForResponse(response => response.url().includes('_action=addTask') && response.request().method() === 'POST');
+  await page.getByRole('button', { name: 'Add task', exact: true }).click();
+  await (await added).finished();
+  await page.evaluate(async () => {
+    const host = document.querySelector('[data-lithono-page]') as HTMLElement & { updateComplete: Promise<boolean> };
+    await host.updateComplete;
+  });
+  expect(errors).toEqual([]);
+  const card = page.locator('task-card');
+  await expect(card).toHaveCount(1);
+  await expect(card.locator('a')).toHaveCount(1);
+  await expect(card.locator('form')).toHaveCount(2);
+  await expect(card.locator('.task-card__status')).toHaveText('Open');
+  await card.evaluate(el => { el.setAttribute('data-original-node', 'true'); });
+  await page.getByLabel('New task').fill('Keep this unsaved draft');
+  let navigations = 0;
+  page.on('framenavigated', frame => { if (frame === page.mainFrame()) navigations++; });
+  await card.getByRole('button', { name: 'Complete', exact: true }).click();
+  await expect(card.locator('.task-card__status')).toHaveText('Done');
+  await expect(card).toHaveClass(/task-card--done/);
+  await expect(card).toHaveAttribute('data-original-node', 'true');
+  await expect(page.getByLabel('New task')).toHaveValue('Keep this unsaved draft');
+  await expect(card.locator('a')).toHaveCount(1);
+  await expect(card.locator('form')).toHaveCount(2);
+  await card.getByRole('button', { name: 'Mark open', exact: true }).click();
+  await expect(card.locator('.task-card__status')).toHaveText('Open');
+  await expect(card).not.toHaveClass(/task-card--done/);
+  expect(navigations).toBe(0);
+
+  await card.getByRole('link').click();
+  await ready(page);
+  await page.getByRole('button', { name: 'Complete', exact: true }).click();
+  await expect(page.locator('.task-card__status')).toHaveText('Done');
+  await page.goto(listUrl);
+  await ready(page);
+  await expect(page.locator('task-card .task-card__status')).toHaveText('Done');
+  await page.locator('task-card').getByRole('button', { name: 'Delete', exact: true }).click();
+  await expect(page.locator('task-card')).toHaveCount(0);
+  await expect(page.getByText('This list is empty. Add a task above.')).toBeVisible();
+  await page.getByRole('button', { name: 'Delete list', exact: true }).click();
+  await expect(page).toHaveURL(/\/lists$/);
+  await expect(page.getByRole('link', { name: 'Regression errands', exact: true })).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
+test('real listings demo renders publicly, signs up, creates a listing and updates its price through both action paths', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', error => errors.push(error.message));
+  page.on('dialog', dialog => dialog.accept());
+  const response = await page.goto('/listings/1');
+  expect(response?.status()).toBe(200);
+  await ready(page);
+  await expect(page.locator('listing-price [data-price]')).toHaveCount(1);
+  await expect(page.getByRole('button', { name: 'Apply $10,000 discount' })).toHaveCount(1);
+  await expect(page.getByText('Something went wrong', { exact: true })).toHaveCount(0);
+
+  await page.goto('/register');
+  await ready(page);
+  await page.getByLabel('Name', { exact: true }).fill('Demo regression');
+  await page.getByLabel('Email', { exact: true }).fill('demo-regression@example.test');
+  await page.getByLabel('Password', { exact: true }).fill('demo-regression-password-123');
+  await page.getByRole('button', { name: 'Create account', exact: true }).click();
+  await expect(page).toHaveURL(/\/listings$/);
+  await page.goto('/listings/new');
+  await ready(page);
+  await page.getByLabel('Address', { exact: true }).fill('Regression house');
+  await page.getByLabel('Price', { exact: true }).fill('250000');
+  await page.getByLabel('House', { exact: true }).check();
+  await page.getByLabel('Status', { exact: true }).selectOption('for-sale');
+  await page.getByRole('button', { name: 'Create listing', exact: true }).click();
+  await expect(page).toHaveURL(/\/listings\/\d+$/);
+  await ready(page);
+  const price = page.locator('listing-price [data-price]');
+  await expect(price).toHaveCount(1);
+  await expect(price).toHaveText('$250,000');
+  await page.locator('listing-price').evaluate(el => el.setAttribute('data-original-node', 'true'));
+  await page.getByRole('button', { name: 'Apply $10,000 discount' }).click();
+  await expect(price).toHaveText('$240,000');
+  await expect(page.locator('listing-price')).toHaveAttribute('data-original-node', 'true');
+  expect(errors).toEqual([]);
+  await expect(page.locator('[data-lithono-page]')).toHaveCount(1);
+  // Server errors must not remove the template markers needed by the retry's
+  // loader refresh. Bypass only native validation to exercise this server path.
+  const priceForm = page.locator('form[action*="_action=updatePrice"]');
+  await priceForm.evaluate(form => { (form as HTMLFormElement).noValidate = true; });
+  await page.getByLabel('Update listing price').fill('9000');
+  await page.getByRole('button', { name: 'Save price', exact: true }).click();
+  expect(errors).toEqual([]);
+  await expect(priceForm).toHaveAttribute('data-state', 'error');
+  await expect(priceForm.locator('[data-error-for="price"]')).not.toHaveText('');
+  await expect(price).toHaveText('$240,000');
+  await priceForm.evaluate(form => { (form as HTMLFormElement).noValidate = false; });
+  await page.getByLabel('Update listing price').fill('230000');
+  await page.getByLabel('Reason (optional)').fill('Regression verification');
+  await page.getByRole('button', { name: 'Save price', exact: true }).click();
+  await expect(price).toHaveText('$230,000');
+  await expect(page.locator('listing-price').getByText('Updated to $230,000', { exact: true })).toBeVisible();
+  await expect(price).toHaveCount(1);
+  await expect(page.getByRole('button', { name: 'Apply $10,000 discount' })).toHaveCount(1);
+  await page.reload();
+  await ready(page);
+  await expect(price).toHaveText('$230,000');
+  await page.getByRole('button', { name: 'Delete listing', exact: true }).click();
+  await expect(page).toHaveURL(/\/listings$/);
+  await expect(page.getByRole('link', { name: 'Regression house', exact: true })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Sign out', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Sign out', exact: true })).toHaveCount(0);
+  await page.goto('/login');
+  await ready(page);
+  await page.getByLabel('Email', { exact: true }).fill('demo-regression@example.test');
+  await page.getByLabel('Password', { exact: true }).fill('demo-regression-password-123');
+  await page.locator('form').getByRole('button', { name: 'Sign in', exact: true }).click();
+  await expect(page).toHaveURL(/\/listings$/);
+  await expect(page.getByRole('button', { name: 'Sign out', exact: true })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test('real demo SSR and native task forms work with JavaScript disabled', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto('http://127.0.0.1:4197/lists/weekend');
+  await expect(page.locator('task-card')).toHaveCount(2);
+  const card = page.locator('task-card').filter({ has: page.getByRole('link', { name: 'Buy groceries', exact: true }) });
+  await expect(card.locator('a')).toHaveCount(1);
+  await card.getByRole('button', { name: 'Complete', exact: true }).click();
+  await expect(card.locator('.task-card__status')).toHaveText('Done');
+  await card.getByRole('button', { name: 'Mark open', exact: true }).click();
+  await expect(card.locator('.task-card__status')).toHaveText('Open');
+  const response = await page.goto('http://127.0.0.1:4197/listings/1');
+  expect(response?.status()).toBe(200);
+  await expect(page.locator('listing-price [data-price]')).toHaveCount(1);
+  await context.close();
+});

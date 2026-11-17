@@ -1,0 +1,9 @@
+<div class="docs-article-grid">
+  <article class="docs-article">
+    <nav class="docs-breadcrumb" aria-label="Breadcrumb"><a href="/docs">Docs</a><span aria-hidden="true">/</span><span>${article.section}</span></nav>
+    <header class="docs-article-header"><p class="eyebrow">${article.section}</p><h1>${article.title}</h1><p class="docs-lead">${article.description}</p><a href="${'/documentation/' + article.id + '.md'}">Read as Markdown</a><span class="docs-version">0.1.0-alpha.1 · Node SSR</span></header>
+    <div class="docs-prose">${unsafeHTML(article.html)}</div>
+    <nav class="docs-pagination" aria-label="Adjacent pages"><lithono-if when="${previous}"><a href="${'/docs/' + previous.id}"><span>← Previous</span><strong>${previous.title}</strong></a></lithono-if><lithono-if when="${next}"><a href="${'/docs/' + next.id}"><span>Next →</span><strong>${next.title}</strong></a></lithono-if></nav>
+  </article>
+  <aside class="docs-toc"><nav aria-label="On this page"><h2>On this page</h2><ul><lithono-each items="${article.headings}" as="heading" key="id"><li class="${heading.depth > 2 ? 'docs-toc-sub' : ''}"><a href="${'#' + heading.id}">${heading.title}</a></li></lithono-each></ul></nav><a href="/docs/bookstore">About the example application</a></aside>
+</div>

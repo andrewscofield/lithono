@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="{{lang}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    // Apply the saved theme before styles paint; system mode follows CSS media queries.
+    try {
+      const preference = localStorage.getItem('lithono-theme');
+      if (preference === 'light' || preference === 'dark') document.documentElement.dataset.theme = preference;
+      document.documentElement.dataset.themePreference = preference === 'light' || preference === 'dark' ? preference : 'system';
+    } catch {}
+  </script>
+  <!--lithono:meta-->
+  <!--lithono:head-->
+</head>
+<body>
+<div id="app"><!--lithono:body--></div>
+<!--lithono:data-->
+</body>
+</html>

@@ -1,0 +1,17 @@
+<docs-shell class="docs-shell">
+  <button class="btn btn-ghost docs-menu-toggle" type="button" data-docs-toggle aria-expanded="false" aria-controls="docs-navigation">Documentation menu</button>
+  <aside class="docs-sidebar" id="docs-navigation">
+    <a class="docs-wordmark" href="/docs">Lithono <span>Documentation</span></a>
+    <form class="docs-search" action="/docs" method="get" role="search">
+      <label for="docs-query">Search documentation</label>
+      <div class="row"><input id="docs-query" name="q" type="search" placeholder="Loaders, forms, CSS…" /><button class="btn" type="submit">Search</button></div>
+    </form>
+    <nav aria-label="Documentation">
+      <lithono-each items="${groups}" as="group" key="title">
+        <section><h2>${group.title}</h2><ul><lithono-each items="${group.articles}" as="item" key="id"><li><a href="${'/docs/' + item.id}" aria-current="${url.pathname === '/docs/' + item.id ? 'page' : 'false'}">${item.title}</a></li></lithono-each></ul></section>
+      </lithono-each>
+    </nav>
+    <a class="docs-machine-link" href="/llms.txt">Documentation for agents ↗</a>
+  </aside>
+  <div class="docs-outlet"><slot></slot></div>
+</docs-shell>

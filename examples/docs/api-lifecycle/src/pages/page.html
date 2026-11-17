@@ -1,0 +1,12 @@
+<h1>Executable lifecycle examples</h1>
+<p>The counter is shared demonstration data stored in this fixture's SQLite file.</p>
+<lifecycle-panel></lifecycle-panel>
+<form method="post" action="${actions.commit.url}">
+  <input type="hidden" name="mode" value="ok">
+  <button>Commit through a native form</button>
+  <p data-form-error>${actions.commit.error ?? ''}</p>
+</form>
+<motion-sample><p data-motion-target>Book cover fallback</p></motion-sample>
+<lithono-animate preset="fade" once><p>Published book fallback</p></lithono-animate>
+<a href="/other">Another page</a>
+<a href="/demo/catalog">Inspect catalog route params</a>

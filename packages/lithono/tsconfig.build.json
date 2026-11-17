@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES2022", "module": "ESNext", "moduleResolution": "bundler",
+    "experimentalDecorators": true, "useDefineForClassFields": false,
+    "strict": true, "skipLibCheck": true, "verbatimModuleSyntax": true,
+    "rewriteRelativeImportExtensions": true, "declaration": true,
+    "rootDir": "../..", "outDir": "dist", "types": ["vite/client", "node"],
+    "paths": {
+      "lithono": ["../../src/framework/index.ts"],
+      "lithono/client": ["../../src/framework/client/index.ts"],
+      "lithono/webmcp": ["../../src/framework/webmcp/index.ts"]
+    }
+  },
+  "include": ["../../src/framework/**/*.ts", "../../cli/index.ts", "../../src/**/*.d.ts"],
+  "exclude": ["../../cli/templates", "../../src/documentation.d.ts"]
+}

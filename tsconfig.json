@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "types": ["vite/client", "node"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "lithono": ["./src/framework/index.ts"],
+      "lithono/config": ["./src/framework/config.ts"],
+      "lithono/url": ["./src/framework/url.ts"],
+      "lithono/client": ["./src/framework/client/index.ts"],
+      "lithono/server": ["./src/framework/server/index.ts"],
+      "lithono/vite": ["./src/framework/vite.ts"],
+      "lithono/auth": ["./src/framework/auth/server.ts"],
+      "lithono/auth/client": ["./src/framework/auth/client.ts"],
+      "lithono/animate": ["./src/framework/animate/index.ts"],
+      "lithono/webmcp": ["./src/framework/webmcp/index.ts"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "cli/**/*.ts", "vite.config.ts", "packages/create-lithono/index.ts"]
+}

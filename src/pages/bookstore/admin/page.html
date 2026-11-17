@@ -1,0 +1,61 @@
+<section class="stack">
+  <p class="eyebrow">Backoffice / Catalog</p>
+  <h1>Your books, your storefront.</h1>
+  <p>Prices are stored in USD cents. Each signed-in account has its own demonstration catalog.</p>
+  <a href="${shop}">View your public shop ↗</a>
+</section>
+
+<div class="bookstore-columns">
+  <section class="card stack">
+    <h2>Catalog</h2>
+    <form method="get" class="row">
+      <label class="field">Search books or SKUs
+        <input name="q" type="search" value="${search}" />
+      </label>
+      <button class="btn" type="submit">Search</button>
+    </form>
+    <p class="muted">${products.length} books in this view.</p>
+    <div class="bookstore-table-wrap">
+      <table>
+        <thead><tr><th>Book</th><th>Stock</th><th>Visibility</th></tr></thead>
+        <tbody>
+          <lithono-each items="${products}" as="product" key="id">
+            <tr>
+              <td><a href="${'/bookstore/admin/' + product.id}">${product.title}</a><br />${product.sku}</td>
+              <td>${product.stock}</td>
+              <td>${product.published ? 'Published' : 'Draft'}</td>
+            </tr>
+          </lithono-each>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card stack">
+    <h2>Add a book</h2>
+    <form method="post" action="${actions.create.url}" class="stack">
+      <p class="notice" data-form-error>${actions.create.error}</p>
+      <label class="field">Title
+        <input name="title" required maxlength="160" value="${actions.create.values?.title ?? ''}" />
+      </label>
+      <label class="field">Author
+        <input name="author" required maxlength="160" value="${actions.create.values?.author ?? ''}" />
+      </label>
+      <label class="field">SKU
+        <input name="sku" required maxlength="40" value="${actions.create.values?.sku ?? ''}" />
+      </label>
+      <label class="field">URL slug
+        <input name="slug" required pattern="[a-z0-9]+(-[a-z0-9]+)*" value="${actions.create.values?.slug ?? ''}" />
+        <span class="field__error">${actions.create.issue('slug')}</span>
+      </label>
+      <label class="field">Price (USD cents)
+        <input name="price" type="number" required min="0" max="1000000" step="1" value="${actions.create.values?.price ?? 2000}" />
+      </label>
+      <div class="field">
+        <label for="new-product-description">Description</label>
+        <textarea id="new-product-description" name="description" required minlength="10" maxlength="3000">${actions.create.values?.description ?? ''}</textarea>
+      </div>
+      <button class="btn" type="submit">Create draft book</button>
+    </form>
+  </section>
+</div>

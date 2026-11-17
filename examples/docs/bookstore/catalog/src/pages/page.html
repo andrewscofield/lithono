@@ -1,0 +1,7 @@
+<section>
+  <h1>Chapter House catalog</h1>
+  <p>A public sample catalog, loaded from SQLite. Prices are USD.</p>
+  <ul>
+    ${data.books.map(book => html`<li><h2>${book.title}</h2><p>${book.price} · ${book.stock} copies on hand</p></li>`)}
+  </ul>
+</section>

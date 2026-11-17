@@ -1,0 +1,12 @@
+<main id="main-content" tabindex="-1">
+  <h1>Chapter House catalog</h1>
+  <p>A read-only catalog with prices in USD.</p>
+  <ul>
+    ${data.books.map(book => html`
+      <li>
+        <h2>${book.title}</h2>
+        <p>${book.price} · ${book.stock} copies on hand</p>
+      </li>
+    `)}
+  </ul>
+</main>

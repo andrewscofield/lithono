@@ -1,0 +1,40 @@
+{
+  "name": "lithono",
+  "version": "0.1.0-alpha.1",
+  "description": "Lit-first Node SSR framework with Hono and Vite",
+  "license": "MIT",
+  "keywords": ["lit", "web-components", "ssr", "hono", "vite", "webmcp"],
+  "type": "module",
+  "engines": { "node": ">=22.13.0" },
+  "files": ["dist", "README.md", "LICENSE"],
+  "bin": { "lithono": "./dist/cli/index.js" },
+  "exports": {
+    ".": { "types": "./dist/src/framework/index.d.ts", "default": "./dist/src/framework/index.js" },
+    "./client": { "types": "./dist/src/framework/client/index.d.ts", "default": "./dist/src/framework/client/index.js" },
+    "./client/bootstrap": { "types": "./dist/src/framework/client/bootstrap.d.ts", "default": "./dist/src/framework/client/bootstrap.js" },
+    "./server": { "types": "./dist/src/framework/server/index.d.ts", "default": "./dist/src/framework/server/index.js" },
+    "./config": { "types": "./dist/src/framework/config.d.ts", "default": "./dist/src/framework/config.js" },
+    "./url": { "types": "./dist/src/framework/url.d.ts", "default": "./dist/src/framework/url.js" },
+    "./vite": { "types": "./dist/src/framework/vite.d.ts", "default": "./dist/src/framework/vite.js" },
+    "./auth": { "types": "./dist/src/framework/auth/server.d.ts", "default": "./dist/src/framework/auth/server.js" },
+    "./auth/client": { "types": "./dist/src/framework/auth/client.d.ts", "default": "./dist/src/framework/auth/client.js" },
+    "./animate": { "types": "./dist/src/framework/animate/index.d.ts", "default": "./dist/src/framework/animate/index.js" },
+    "./webmcp": { "types": "./dist/src/framework/webmcp/index.d.ts", "default": "./dist/src/framework/webmcp/index.js" }
+  },
+  "scripts": { "build": "node ../../tools/build-package.mjs", "prepack": "pnpm build" },
+  "dependencies": {
+    "@custom-elements-manifest/analyzer": "^0.11.0",
+    "@hono/vite-dev-server": "^0.26.0",
+    "@lit-labs/ssr": "4.1.0",
+    "@lit-labs/ssr-client": "1.1.8",
+    "@lit/context": "^1.1.6",
+    "acorn": "^8.18.0",
+    "hono": "^4.13.0",
+    "magic-string": "^1.4.1",
+    "parse5": "^8.0.1",
+    "typescript-parser": "npm:typescript@~5.9.3",
+    "zod": "^4.5.0"
+  },
+  "peerDependencies": { "lit": "3.3.3", "vite": ">=8.2.0 <9", "better-auth": "^1.7.0", "animejs": "^4.5.0" },
+  "peerDependenciesMeta": { "better-auth": { "optional": true }, "animejs": { "optional": true } }
+}

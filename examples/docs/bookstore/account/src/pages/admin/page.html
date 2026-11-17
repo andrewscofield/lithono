@@ -1,0 +1,3 @@
+<h1>Your catalog</h1>
+<p>Welcome, ${data.name}. This catalog belongs to your account.</p>
+<ul>${data.books.map(book => html`<li>${book.title} · ${book.published ? 'Published' : 'Draft'} · ${book.stock} copies on hand</li>`)}</ul>

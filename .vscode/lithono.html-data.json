@@ -1,0 +1,33 @@
+{
+  "version": 1.1,
+  "tags": [
+    {
+      "name": "lithono-if",
+      "description": "Compile-only: becomes `${when ? html`…` : nothing}`. Never a custom element.",
+      "attributes": [
+        {
+          "name": "when",
+          "description": "JavaScript expression. Truthy keeps the inner HTML."
+        }
+      ]
+    },
+    {
+      "name": "lithono-each",
+      "description": "Compile-only: becomes `.map()` or `repeat()`. Never a custom element.",
+      "attributes": [
+        {
+          "name": "items",
+          "description": "Array expression to iterate."
+        },
+        {
+          "name": "as",
+          "description": "Loop variable name (default: item)."
+        },
+        {
+          "name": "key",
+          "description": "Item property used as the repeat key."
+        }
+      ]
+    }
+  ]
+}

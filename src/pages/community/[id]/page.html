@@ -1,0 +1,7 @@
+<article class="stack"><h1>${article.title}</h1><p>${article.topic} · ${article.kind}</p>
+  <lithono-each items="${paragraphs}" as="paragraph"><p>${paragraph}</p></lithono-each>
+  <p role="status">${bookmarked ? 'Bookmarked' : 'Not bookmarked'}${article.kind === 'event' ? (rsvp ? ' · RSVP recorded' : ' · No RSVP') : ''}</p>
+  <form method="post" action="${actions.mark.url}"><input type="hidden" name="kind" value="bookmark"><input type="hidden" name="enabled" value="${bookmarked ? 'no' : 'yes'}"><button type="submit">${bookmarked ? 'Remove bookmark' : 'Bookmark article'}</button></form>
+  <lithono-if when="${article.kind === 'event'}"><form method="post" action="${actions.mark.url}"><input type="hidden" name="kind" value="rsvp"><input type="hidden" name="enabled" value="${rsvp ? 'no' : 'yes'}"><button type="submit">${rsvp ? 'Withdraw RSVP' : 'RSVP to event'}</button></form></lithono-if>
+  <a href="/community">All publication</a>
+</article>

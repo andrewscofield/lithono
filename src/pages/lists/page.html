@@ -1,0 +1,42 @@
+<section class="stack">
+  <page-header
+    title="Lists"
+    subtitle="Make a list, add tasks, and share a link to any one of them."
+  ></page-header>
+
+  <form class="stack add-form" method="post" action="${actions.createList.url}" data-reset-on-success>
+    <p class="notice" data-form-error hidden="${!actions.createList.error}">${actions.createList.error ?? ''}</p>
+    <div class="row add-form__row">
+      <div class="field">
+        <label for="list-name">New list</label>
+        <input id="list-name" name="name" placeholder="Weekend errands" value="${actions.createList.values.name ?? ''}">
+        <p class="field__error" data-error-for="name" hidden="${!actions.createList.issue('name')}">${actions.createList.issue('name') ?? ''}</p>
+      </div>
+      <button class="btn" type="submit">Add list</button>
+    </div>
+  </form>
+
+  <lithono-if when="${lists.length}">
+    <ul class="card-list">
+      <lithono-each items="${lists}" as="list" key="id">
+        <li class="card list-card">
+          <div class="list-card__body">
+            <h2><a href="/lists/${list.id}">${list.name}</a></h2>
+            <p class="muted">
+              ${list.openCount} open
+              · ${list.taskCount} total
+            </p>
+          </div>
+          <form method="post" action="${actions.deleteList.url}" data-confirm="Delete this list and its tasks?">
+            <input type="hidden" name="listId" value="${list.id}">
+            <button class="btn btn-ghost" type="submit">Delete</button>
+          </form>
+        </li>
+      </lithono-each>
+    </ul>
+  </lithono-if>
+
+  <lithono-if when="${!lists.length}">
+    <p class="notice">No lists yet. Add one above.</p>
+  </lithono-if>
+</section>

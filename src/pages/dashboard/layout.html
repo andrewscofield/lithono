@@ -1,0 +1,5 @@
+<section class="stack">
+  <header><p class="eyebrow">Personal workspace</p><h1>Project dashboard</h1><p>${identity.name} · ${identity.email}</p></header>
+  <nav aria-label="Projects"><lithono-each items="${projects}" as="project" key="id"><a href="${project.href}">${project.name}</a> </lithono-each></nav>
+  <slot></slot>
+</section>

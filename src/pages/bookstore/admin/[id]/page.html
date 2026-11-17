@@ -1,0 +1,85 @@
+<section class="stack">
+  <a href="/bookstore/admin">← Catalog</a>
+  <p class="eyebrow">Backoffice / Product</p>
+  <h1>${product.title}</h1>
+  <div class="row">
+    <span class="status-label">${product.stock} copies on hand</span>
+    <span class="status-label">Version ${product.version}</span>
+    <span class="status-label">${product.published ? 'Published' : 'Draft'}</span>
+    <lithono-if when="${product.published}">
+      <a href="${publicURL}">View product in your shop ↗</a>
+    </lithono-if>
+  </div>
+</section>
+
+<div class="bookstore-columns">
+  <section class="card stack">
+    <h2>Product and storefront</h2>
+    <form method="post" action="${actions.save.url}" class="stack">
+      <input type="hidden" name="version" value="${actions.save.values?.version ?? product.version}" />
+      <p class="notice" data-form-error>${actions.save.error}</p>
+      <label class="field">Title
+        <input name="title" required maxlength="160" value="${actions.save.values?.title ?? product.title}" />
+      </label>
+      <label class="field">Author
+        <input name="author" required maxlength="160" value="${actions.save.values?.author ?? product.author}" />
+      </label>
+      <label class="field">SKU
+        <input name="sku" required maxlength="40" value="${actions.save.values?.sku ?? product.sku}" />
+      </label>
+      <label class="field">URL slug
+        <input name="slug" required pattern="[a-z0-9]+(-[a-z0-9]+)*" value="${actions.save.values?.slug ?? product.slug}" />
+        <span class="field__error">${actions.save.issue('slug')}</span>
+      </label>
+      <label class="field">Price (USD cents)
+        <input name="price" type="number" required min="0" max="1000000" step="1" value="${actions.save.values?.price ?? product.price}" />
+      </label>
+      <div class="field">
+        <label for="product-description">Description</label>
+        <textarea id="product-description" name="description" required minlength="10" maxlength="3000">${actions.save.values?.description ?? product.description}</textarea>
+      </div>
+      <label class="field">Storefront visibility
+        <select name="published">
+          <option value="draft" ?selected="${(actions.save.values?.published ?? (product.published ? 'published' : 'draft')) === 'draft'}">Draft</option>
+          <option value="published" ?selected="${(actions.save.values?.published ?? (product.published ? 'published' : 'draft')) === 'published'}">Published</option>
+        </select>
+      </label>
+      <button class="btn" type="submit">Save product</button>
+    </form>
+    <a href="${'/bookstore/admin/' + product.id}" data-lithono-native>Reload current product</a>
+  </section>
+
+  <div class="stack">
+    <section class="card stack">
+      <h2>Receive a delivery</h2>
+      <p>Receiving adds physical stock and an audit receipt in one transaction. Use the delivery note as the reference.</p>
+      <form method="post" action="${actions.receive.url}" class="stack" data-reset-on-success>
+        <input type="hidden" name="version" value="${actions.receive.values?.version ?? product.version}" />
+        <input type="hidden" name="token" value="${actions.receive.values?.token ?? token}" />
+        <p class="notice" data-form-error>${actions.receive.error}</p>
+        <label class="field">Copies received
+          <input name="quantity" type="number" required min="1" max="10000" step="1" value="${actions.receive.values?.quantity ?? 1}" />
+          <span class="field__error">${actions.receive.issue('quantity')}</span>
+        </label>
+        <label class="field">Delivery reference
+          <input name="reference" required maxlength="160" value="${actions.receive.values?.reference ?? ''}" />
+          <span class="field__error">${actions.receive.issue('reference')}</span>
+        </label>
+        <button class="btn" type="submit">Receive stock</button>
+      </form>
+    </section>
+    <section class="card stack">
+      <h2>Receiving history</h2>
+      <p>${receipts.length} deliveries recorded. Replaying an identical receipt token does not add stock twice.</p>
+      <ul class="card-list">
+        <lithono-each items="${receipts}" as="receipt" key="id">
+          <li>
+            <strong>+${receipt.quantity} copies</strong> · ${receipt.reference}<br />
+            <time datetime="${new Date(receipt.created_at).toISOString()}">${new Date(receipt.created_at).toISOString().replace('T', ' ').slice(0, 19)} UTC</time><br />
+            <small>Receipt ${receipt.id}</small>
+          </li>
+        </lithono-each>
+      </ul>
+    </section>
+  </div>
+</div>

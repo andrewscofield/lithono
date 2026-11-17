@@ -1,0 +1,9 @@
+<section class="stack"><h1>Community publication</h1><p>Native reading, personal bookmarks and event interest. Editorial content is controlled plain-text paragraphs, never arbitrary HTML.</p>
+  <form class="filter-panel" method="get" action="/community"><label for="publication-topic">Topic</label><select id="publication-topic" name="topic"><option value="">All topics</option><option value="platform" selected="${topic === 'platform'}">Platform</option><option value="events" selected="${topic === 'events'}">Events</option></select><button class="btn" type="submit">Filter publication</button></form>
+  <ul class="card-list"><lithono-each items="${posts}" as="article" key="id"><li class="card"><h2><a href="/community/${article.id}">${article.title}</a></h2><p>${article.topic} · ${article.kind}</p></li></lithono-each></ul>
+  <section class="card stack"><h2>Community newsletter</h2><p role="status">${subscriptionState} · ${delivery}</p>
+    <p>Sign in to subscribe using your account email. Follow the email link and submit its confirmation form before subscription becomes confirmed.</p>
+    <form method="post" action="${actions.subscribe.url}"><p data-form-error hidden="${!actions.subscribe.error}">${actions.subscribe.error ?? ''}</p><button type="submit">Subscribe to newsletter</button></form>
+    <form method="post" action="${actions.retry.url}"><button type="submit">Retry newsletter confirmation</button></form>
+  </section><lithono-if when="${editorial}"><a href="/community/editor">Editorial desk</a></lithono-if>
+</section>

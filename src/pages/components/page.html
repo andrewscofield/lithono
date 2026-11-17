@@ -1,0 +1,40 @@
+<section class="directory stack">
+  <header class="directory-hero stack">
+    <p class="eyebrow">The component collection</p>
+    <h1>Component directory</h1>
+    <p>Small pieces. Real interactions. Explore 13 working examples, from platform primitives to Lit and Web Awesome—with source you can take apart.</p>
+    <div class="row"><span class="status-label">Light + shadow DOM</span><span class="status-label">Live previews</span><span class="status-label">Server-highlighted source</span></div>
+  </header>
+  <form method="get" action="/components" class="directory-search card" aria-label="Find components">
+    <label class="field directory-search__query">Search <input type="search" name="q" placeholder="Try counters, forms, or Web Awesome…" value="${query.q}"></label>
+    <label class="field">Category <select name="category">
+      <option value="">All categories</option>
+      <option value="Interaction" selected="${query.category === 'Interaction'}">Interaction</option>
+      <option value="Content" selected="${query.category === 'Content'}">Content</option>
+      <option value="Forms" selected="${query.category === 'Forms'}">Forms</option>
+      <option value="Feedback" selected="${query.category === 'Feedback'}">Feedback</option>
+    </select></label>
+    <label class="field">Rendering <select name="rendering">
+      <option value="">All rendering</option>
+      <option value="light" selected="${query.rendering === 'light'}">Light DOM</option>
+      <option value="shadow" selected="${query.rendering === 'shadow'}">Shadow DOM</option>
+      <option value="static" selected="${query.rendering === 'static'}">Static fragment</option>
+    </select></label>
+    <label class="field">SSR evidence <select name="ssr">
+      <option value="">All evidence</option>
+      <option value="verified" selected="${query.ssr === 'verified'}">Verified</option>
+      <option value="unknown" selected="${query.ssr === 'unknown'}">Unknown</option>
+    </select></label>
+    <div class="row directory-search__actions"><button class="btn" type="submit">Filter examples <span aria-hidden="true">↗</span></button><a href="/components">Reset filters</a></div>
+  </form>
+  <p role="status">${total} examples</p>
+  <ul class="card-list showcase-grid">
+    <lithono-each items="${examples}" as="example" key="slug">
+      <li class="card directory-card"><span class="status-label">${example.category}</span><h2><a href="/components/${example.slug}">${example.name}<span aria-hidden="true"> ↗</span></a></h2>
+        <p>${example.description}</p><p class="muted">${example.authoring} · ${example.rendering} DOM</p>
+        <p class="directory-card__footer">SSR evidence: ${example.ssr}</p>
+      </li>
+    </lithono-each>
+  </ul>
+  <p>All results are shown; this curated catalogue needs no pagination. <a href="/lab">Run focused ownership experiments in the lab.</a></p>
+</section>

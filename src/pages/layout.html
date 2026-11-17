@@ -1,0 +1,31 @@
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="site-header">
+  <a class="site-brand" href="/">Lithono</a>
+  <nav class="site-nav" aria-label="Main navigation">
+    <a href="/" aria-current="${url.pathname === '/' ? 'page' : 'false'}">Showcase</a>
+    <a href="/listings" aria-current="${url.pathname.startsWith('/listings') ? 'page' : 'false'}">Listings</a>
+    <a href="/components" aria-current="${url.pathname.startsWith('/components') ? 'page' : 'false'}">Components</a>
+    <a href="/dashboard" aria-current="${url.pathname.startsWith('/dashboard') ? 'page' : 'false'}">Dashboard</a>
+    <a href="/workshops" aria-current="${url.pathname.startsWith('/workshops') ? 'page' : 'false'}">Workshops</a>
+    <a href="/inventory" aria-current="${url.pathname.startsWith('/inventory') ? 'page' : 'false'}">Inventory</a>
+    <a href="/community" aria-current="${url.pathname.startsWith('/community') ? 'page' : 'false'}">Community</a>
+    <a href="/docs" aria-current="${url.pathname.startsWith('/docs') ? 'page' : 'false'}">Docs</a>
+    <a href="/bookstore" aria-current="${url.pathname.startsWith('/bookstore') ? 'page' : 'false'}">Bookstore</a>
+    <a href="/lab" aria-current="${url.pathname.startsWith('/lab') ? 'page' : 'false'}">Lab</a>
+    <a href="/lists" aria-current="${url.pathname.startsWith('/lists') ? 'page' : 'false'}">Lists</a>
+    <lithono-if when="${user}">
+      <span class="site-account">
+        ${user.email}
+        <form method="post" action="/logout?_action=signOut">
+          <button class="btn btn-ghost" type="submit">Sign out</button>
+        </form>
+      </span>
+    </lithono-if>
+    <lithono-if when="${!user}">
+      <a href="/login">Sign in</a>
+    </lithono-if>
+  </nav>
+  <theme-picker><label class="theme-picker">Theme <select aria-label="Color theme" disabled><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label></theme-picker>
+</header>
+<main class="site-main" id="main-content" tabindex="-1"><slot></slot></main>
+<footer class="site-footer">Lithono showcase · Server-rendered HTML, native forms, selective Custom Elements.</footer>

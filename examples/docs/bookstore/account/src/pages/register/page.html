@@ -1,0 +1,8 @@
+<h1>Create your account</h1>
+<form method="post" action="${actions.register.url}">
+  <label>Name <input name="name" autocomplete="name" required value="${actions.register.values?.name ?? ''}"></label>
+  <label>Email <input name="email" type="email" autocomplete="username" required value="${actions.register.values?.email ?? ''}"></label>
+  <label>Password <input name="password" type="password" autocomplete="new-password" minlength="12" required></label>
+  <p data-form-error>${actions.register.error ?? ''}</p>
+  <button>Create account</button>
+</form>

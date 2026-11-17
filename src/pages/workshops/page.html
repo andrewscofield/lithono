@@ -1,0 +1,11 @@
+<section class="stack">
+  <h1>Workshops</h1>
+  <p>Book a free session or use Stripe test-mode Checkout. Paid bookings are confirmed only by a verified payment webhook.</p>
+  <lithono-each items="${sessions}" as="session" key="id">
+    <article class="card stack">
+      <h2><a href="/workshops/${session.id}">${session.title}</a></h2>
+      <p>${session.description}</p>
+      <p>${session.time} (${session.zone}) · ${session.priceLabel} per attendee · Capacity ${session.capacity}</p>
+    </article>
+  </lithono-each>
+</section>

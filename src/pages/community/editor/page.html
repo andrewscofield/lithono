@@ -1,0 +1,12 @@
+<section class="stack"><h1>Editorial desk</h1><p>Explicit role required. Plain-text paragraphs only; save keeps a draft, publish makes it public.</p>
+  <ul><lithono-each items="${posts}" as="post" key="id"><li><a href="/community/editor?edit=${post.id}">${post.title}</a> · ${post.state}</li></lithono-each></ul>
+  <p role="status">${item.state}</p>
+  <form method="post" action="${actions.save.url}" class="stack">
+    <input type="hidden" name="id" value="${actions.save.values.id ?? item.id}"><input type="hidden" name="version" value="${actions.save.values.version ?? item.version}">
+    <p data-form-error hidden="${!actions.save.error}">${actions.save.error ?? ''}</p>
+    <label>Title <input name="title" required value="${actions.save.values.title ?? item.title}"></label>
+    <label>Topic <select name="topic"><option value="platform">Platform</option><option value="events" selected="${(actions.save.values.topic ?? item.topic) === 'events'}">Events</option></select></label>
+    <label>Plain-text body <textarea name="body" required>${actions.save.values.body ?? item.body}</textarea></label>
+    <button type="submit" name="intent" value="save">Save draft</button><button type="submit" name="intent" value="publish">Publish article</button>
+  </form><a href="/community/editor">New draft</a><a href="/community/editor?edit=${item.id}">Reload existing record</a><a href="/community">Public publication</a>
+</section>

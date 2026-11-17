@@ -1,0 +1,10 @@
+<form method="post" action="${this.actions().saveNotes.url}" class="card stack">
+  <h2>Project notes</h2>
+  <input type="hidden" name="projectId" value="${this.project?.id ?? ''}">
+  <input type="hidden" name="version" value="${this.formVersion}">
+  <label for="dashboard-notes-text">Notes</label><textarea id="dashboard-notes-text" name="notes" maxlength="4000" rows="6">${this.notesValue}</textarea>
+  <p data-form-error hidden="${!this.actions().saveNotes.error}">${this.actions().saveNotes.error ?? ''}</p>
+  <p data-error-for="notes" hidden="${!this.actions().saveNotes.issue('notes')}">${this.actions().saveNotes.issue('notes') ?? ''}</p>
+  <button type="submit">Save notes</button>
+  <p>Unsaved text belongs to this editor. Status refreshes keep the draft; selecting another project opens that project's notes. On conflict, copy your draft before reloading to compare.</p>
+</form>

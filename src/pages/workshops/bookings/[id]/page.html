@@ -1,0 +1,22 @@
+<section class="stack">
+  <h1>${booking.state === 'confirmed' ? 'You’re booked!' : 'Booking status'}</h1>
+  <h2>${session.title}</h2>
+  <p role="status">${booking.state}</p>
+  <p>${booking.quantity} attendees · Reference ${booking.id}</p>
+  <p class="notice" data-tone="${booking.state === 'confirmed' ? 'success' : ''}">${delivery}</p>
+  <lithono-if when="${confirmation}">
+    <section class="card stack" aria-label="Booking confirmation">
+      <h2>${confirmation.subject}</h2>
+      <p>${confirmation.text}</p>
+      <p class="muted">Confirmation for ${confirmation.to}. Keep your booking reference for your records.</p>
+    </section>
+  </lithono-if>
+  <lithono-if when="${booking.state === 'pending'}">
+    <p>Payment has not been confirmed. Returning from Checkout is not proof of payment. Hold expires ${expires} UTC. Refresh this page after the webhook arrives.</p>
+    <lithono-if when="${booking.checkout_url}"><a href="${booking.checkout_url}">Resume test Checkout</a></lithono-if>
+    <form method="post" action="${actions.cancel.url}"><button class="btn" type="submit">Cancel booking and release places</button></form>
+  </lithono-if>
+  <lithono-if when="${booking.state === 'needs_attention'}"><p>Payment arrived after the hold was released. No places were confirmed. Operator reconciliation/refund required.</p></lithono-if>
+  <lithono-if when="${canRetry}"><form method="post" action="${actions.retry.url}"><button class="btn" type="submit">Retry confirmation email</button></form></lithono-if>
+  <a href="/workshops">Browse workshops</a>
+</section>

@@ -1,0 +1,5 @@
+dist/
+results/
+custom-elements.json
+.vscode/
+src/framework/generated/

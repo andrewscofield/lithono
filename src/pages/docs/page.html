@@ -1,0 +1,10 @@
+<div class="docs-home stack">
+  <p class="eyebrow">HTML first. Application ready.</p>
+  <h1>Lithono documentation</h1>
+  <p class="docs-lead">Build a real application with familiar HTML, CSS, and TypeScript. Learn the server, add web components where they help, and understand what reaches the browser.</p>
+  <lithono-if when="${!searching}">
+    <div class="docs-start"><h2>Your first useful page</h2><p>No Lit experience required. Start with a page, load a book, and grow into a connected bookstore backoffice and shop.</p><a class="btn" href="/docs/installation">Start building →</a><a href="/bookstore">Explore Chapter House ↗</a></div>
+    <lithono-each items="${groups}" as="group" key="title"><section class="stack"><h2>${group.title}</h2><div class="docs-card-grid"><lithono-each items="${group.articles}" as="item" key="id"><a class="docs-card" href="${'/docs/' + item.id}"><h3>${item.title}</h3><p>${item.description}</p><span aria-hidden="true">→</span></a></lithono-each></div></section></lithono-each>
+  </lithono-if>
+  <lithono-if when="${searching}"><section class="stack"><h2>Search results for “${query}”</h2><p>${results.length} matching pages. <a href="/docs">Clear search</a></p><div class="docs-card-grid"><lithono-each items="${results}" as="item" key="id"><a class="docs-card" href="${'/docs/' + item.id}"><span class="eyebrow">${item.section}</span><h3>${item.title}</h3><p>${item.description}</p></a></lithono-each></div></section></lithono-if>
+</div>

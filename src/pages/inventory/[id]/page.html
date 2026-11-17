@@ -1,0 +1,10 @@
+<section class="stack"><h1>${item.sku} · ${item.name}</h1><p>Current stock ${item.stock}, threshold ${item.threshold}, version ${item.version}.</p>
+  <form method="post" action="${actions.adjust.url}" class="stack">
+    <input type="hidden" name="id" value="${item.id}"><input type="hidden" name="version" value="${actions.adjust.values.version ?? item.version}">
+    <p data-form-error hidden="${!actions.adjust.error}">${actions.adjust.error ?? ''}</p>
+    <label>Stock <input name="stock" type="number" min="0" required value="${actions.adjust.values.stock ?? item.stock}"></label>
+    <label>Threshold <input name="threshold" type="number" min="0" required value="${actions.adjust.values.threshold ?? item.threshold}"></label>
+    <label>Reason <input name="reason" required value="${actions.adjust.values.reason ?? ''}"></label><button type="submit">Save adjustment</button>
+  </form><a href="/inventory/${item.id}">Reload current values before reapplying</a>
+  <h2>Adjustment audit</h2><ul><lithono-each items="${audit}" as="entry"><li>${entry.delta} · ${entry.reason}</li></lithono-each></ul><a href="/inventory">Inventory</a>
+</section>

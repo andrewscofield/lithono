@@ -1,0 +1,35 @@
+<section class="stack">
+  <p class="crumb"><a href="/lists">Lists</a></p>
+  <page-header
+    title="${list.name}"
+    subtitle="${tasks.length + ' tasks · ' + doneCount + ' complete'}"
+  >
+    <form method="post" action="${actions.deleteList.url}" data-confirm="Delete this list and its tasks?">
+      <button class="btn btn-danger" type="submit">Delete list</button>
+    </form>
+  </page-header>
+
+  <form class="stack add-form" method="post" action="${actions.addTask.url}" data-reset-on-success>
+    <p class="notice" data-form-error hidden="${!actions.addTask.error}">${actions.addTask.error ?? ''}</p>
+    <div class="row add-form__row">
+      <div class="field">
+        <label for="task-title">New task</label>
+        <input id="task-title" name="title" placeholder="What needs doing?" value="${actions.addTask.values.title ?? ''}">
+        <p class="field__error" data-error-for="title" hidden="${!actions.addTask.issue('title')}">${actions.addTask.issue('title') ?? ''}</p>
+      </div>
+      <button class="btn" type="submit">Add task</button>
+    </div>
+  </form>
+
+  <ul class="card-list">
+    <lithono-each items="${tasks}" as="task" key="id">
+      <li>
+        <task-card .data="${task}"></task-card>
+      </li>
+    </lithono-each>
+  </ul>
+
+  <lithono-if when="${!tasks.length}">
+    <p class="notice">This list is empty. Add a task above.</p>
+  </lithono-if>
+</section>

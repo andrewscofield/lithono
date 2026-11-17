@@ -1,0 +1,14 @@
+{
+  "name": "create-lithono",
+  "version": "0.1.0-alpha.1",
+  "description": "Scaffold a new Lithono application",
+  "license": "MIT",
+  "keywords": ["lithono", "lit", "web-components", "starter"],
+  "type": "module",
+  "bin": {
+    "create-lithono": "./dist/index.js"
+  },
+  "files": ["dist", "template", "README.md", "LICENSE"],
+  "engines": { "node": ">=22.13.0" },
+  "scripts": { "build": "tsc index.ts --outDir dist --target ES2022 --module NodeNext --moduleResolution NodeNext --skipLibCheck", "prepack": "pnpm build" }
+}

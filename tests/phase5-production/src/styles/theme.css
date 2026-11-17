@@ -1,0 +1,7 @@
+:root {
+  --fixture-background: rgb(240 245 250);
+  font-family: system-ui;
+}
+body {
+  background: var(--fixture-background);
+}

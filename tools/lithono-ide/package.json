@@ -1,0 +1,20 @@
+{
+  "name": "ide",
+  "displayName": "Lithono Custom Elements",
+  "description": "Custom-element definitions and hover, plus route-aware editor tab labels for Lithono.",
+  "version": "0.2.0",
+  "publisher": "lithono",
+  "private": true,
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": ["Programming Languages"],
+  "activationEvents": ["onLanguage:typescript", "onLanguage:javascript"],
+  "main": "./extension.cjs",
+  "contributes": {
+    "commands": [
+      { "command": "lithono.configureRouteTabLabels", "title": "Lithono: Configure Route Tab Labels" }
+    ],
+    "languages": []
+  }
+}

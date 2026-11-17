@@ -1,0 +1,18 @@
+<article class="stack auth-panel">
+  <h1>Sign in</h1>
+  <p>Use your email and password. New here? <a href="${registerHref}">Create an account</a>.</p>
+  <form class="stack" method="post" action="${signInHref}">
+    <p class="notice" data-form-error hidden="${!actions.signIn.error}">${actions.signIn.error ?? ''}</p>
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" value="${actions.signIn.values.email ?? ''}">
+      <p class="field__error" data-error-for="email" hidden="${!actions.signIn.issue('email')}">${actions.signIn.issue('email') ?? ''}</p>
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" value="${actions.signIn.values.password ?? ''}">
+      <p class="field__error" data-error-for="password" hidden="${!actions.signIn.issue('password')}">${actions.signIn.issue('password') ?? ''}</p>
+    </div>
+    <button class="btn" type="submit">Sign in</button>
+  </form>
+</article>

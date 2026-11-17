@@ -1,0 +1,16 @@
+<div class="task-card__body">
+  <p class="task-card__status">${this.data?.statusLabel ?? ''}</p>
+  <h2 class="task-card__title">
+    <a href="${this.data?.href ?? '#'}">${this.data?.title ?? ''}</a>
+  </h2>
+</div>
+<div class="task-card__actions">
+  <form method="post" action="${this.actions().toggleTask?.url ?? ''}">
+    <input type="hidden" name="taskId" value="${this.data?.id ?? ''}">
+    <button class="btn" type="submit">${this.data?.toggleLabel ?? 'Toggle'}</button>
+  </form>
+  <form method="post" action="${this.actions().deleteTask?.url ?? ''}" data-confirm="Delete this task?">
+    <input type="hidden" name="taskId" value="${this.data?.id ?? ''}">
+    <button class="btn btn-ghost" type="submit">Delete</button>
+  </form>
+</div>

@@ -1,0 +1,16 @@
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.page-header .hero {
+  flex: 1;
+  min-width: 12rem;
+}
+
+.page-header__subtitle {
+  margin: 0;
+}

@@ -1,0 +1,13 @@
+lithono-animate {
+  display: contents;
+}
+
+lithono-animate[data-animate-pending] > * {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  lithono-animate[data-animate-pending] > * {
+    opacity: 1;
+  }
+}

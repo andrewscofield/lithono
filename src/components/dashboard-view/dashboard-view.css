@@ -1,0 +1,8 @@
+dashboard-view { display: grid; gap: 1.25rem; }
+dashboard-status { display: block; }
+dashboard-view table { width: 100%; border-collapse: collapse; }
+dashboard-view th, dashboard-view td { text-align: left; padding: .3rem .6rem; border-bottom: 1px solid var(--color-line); }
+dashboard-view dashboard-chart { display: block; color: var(--color-brand); }
+dashboard-view dashboard-chart[hidden] { display: none; }
+dashboard-view form.row { flex-wrap: wrap; }
+dashboard-view label { font-weight: 600; }

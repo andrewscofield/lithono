@@ -1,0 +1,11 @@
+<section class="stack"><h1>Platform and ownership lab</h1><p>Focused reproducible experiments. Local counters/drafts belong to components; selected sample belongs to the URL; validation belongs to the server. SSR is buffered.</p>
+  <lab-controls sample="${sample}"></lab-controls>
+  <section class="card stack"><h2>Native/enhanced validation parity</h2><p role="status">Validated echo: ${message}</p>
+    <form class="stack" method="post" action="${actions.echo.url}"><p data-form-error hidden="${!actions.echo.error}">${actions.echo.error ?? ''}</p><label>Echo message <input name="message" required minlength="3" maxlength="100" value="${actions.echo.values.message ?? message}"></label><p data-error-for="message" hidden="${!actions.echo.issue('message')}">${actions.echo.issue('message') ?? ''}</p><button type="submit">Validate echo</button></form>
+    <form class="stack" method="post" action="${actions.echo.url}" data-lithono-native><label>Always-native message <input name="message" required minlength="3"></label><button type="submit">Validate native echo</button></form>
+  </section>
+  <section class="card stack"><h2>Ordinary imports and SSR scope</h2><p>The static light fragment is server-rendered. Vanilla/Lit interactive previews are explicitly selected browser imports. Their SSR is not claimed by these fixtures.</p><directory-banner></directory-banner>
+    <preview-host data-example="vanilla-counter" manual><button type="button" data-activate disabled>Activate vanilla preview</button><p role="status">Opt-in delayed activation experiment</p><div data-preview></div></preview-host>
+  </section>
+  <p><a href="/docs/lab-source">Guided route, HTML, component, CSS and compiler output</a> · <a href="/components">More interoperable fixtures</a> · <a href="/dashboard">Workspace dashboard identity experiments</a></p>
+</section>

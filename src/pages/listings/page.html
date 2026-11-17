@@ -1,0 +1,43 @@
+<section class="stack">
+  <page-header title="Listings">
+    <lithono-if when="${user}">
+      <a class="btn" href="/listings/new">New listing</a>
+    </lithono-if>
+  </page-header>
+  <p>Explore Oregon homes and land. Sample properties, not live offers.</p>
+  <property-filters .data="${explorer}"></property-filters>
+  <p role="status">${total} properties · Page ${page} of ${pages}</p>
+  <ul class="card-list showcase-grid property-grid">
+    <lithono-each items="${listings}" as="listing" key="id">
+      <li class="card">
+        <lithono-if when="${listing.image}">
+          <img src="${listing.image}" alt="Illustration, not a property photograph" width="320" height="160" loading="lazy">
+        </lithono-if>
+        <h2><a href="/listings/${listing.id}">${listing.address}</a></h2>
+        <p>${listing.location}</p>
+        <p>${listing.description}</p>
+        <dl class="card__meta">
+          <div>
+            <dt>Price</dt>
+            <dd>${listing.priceLabel}</dd>
+          </div>
+          <div>
+            <dt>Type</dt>
+            <dd>${listing.kindLabel}</dd>
+          </div>
+          <div>
+            <dt>Status</dt>
+            <dd>${listing.statusLabel}</dd>
+          </div>
+          <lithono-if when="${listing.featured}">
+            <div>
+              <dt>Featured</dt>
+              <dd>Yes</dd>
+            </div>
+          </lithono-if>
+        </dl>
+      </li>
+    </lithono-each>
+  </ul>
+  <p>Illustrations: Lithono originals, CC0. All imagery is served locally.</p>
+</section>

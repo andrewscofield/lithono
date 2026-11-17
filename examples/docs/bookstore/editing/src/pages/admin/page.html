@@ -1,0 +1,15 @@
+<h1>Your catalog</h1>
+<p>Welcome, ${data.name}.</p>
+<ul>${data.books.map(book => html`<li><a href="${'/admin/' + book.id}">${book.title}</a> · ${book.published ? 'Published' : 'Draft'}</li>`)}</ul>
+<h2>Create a draft</h2>
+<form method="post" action="${actions.create.url}">
+  <label>Title <input name="title" required value="${actions.create.values?.title ?? ''}"></label>
+  <label>Author <input name="author" required value="${actions.create.values?.author ?? ''}"></label>
+  <label>SKU <input name="sku" required value="${actions.create.values?.sku ?? ''}"></label>
+  <label>URL slug <input name="slug" required value="${actions.create.values?.slug ?? ''}"></label>
+  <label for="description">Description</label>
+  <textarea id="description" name="description" required minlength="10">${actions.create.values?.description ?? ''}</textarea>
+  <label>Price in USD cents <input name="priceCents" type="number" min="0" step="1" required value="${actions.create.values?.priceCents ?? 1800}"></label>
+  <p data-form-error>${actions.create.error ?? ''}</p>
+  <button>Create draft book</button>
+</form>

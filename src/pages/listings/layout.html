@@ -1,0 +1,15 @@
+<div class="listings-layout">
+  <aside class="listings-sidebar">
+    <h2>Listings</h2>
+    <nav>
+      <a href="/listings">All listings</a>
+      <lithono-if when="${user}">
+        <a href="/listings/new">New listing</a>
+      </lithono-if>
+      <lithono-if when="${!user}">
+        <a href="/login">Sign in to list</a>
+      </lithono-if>
+    </nav>
+  </aside>
+  <div class="listings-body"><slot></slot></div>
+</div>

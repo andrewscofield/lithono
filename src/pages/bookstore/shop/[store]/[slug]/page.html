@@ -1,0 +1,16 @@
+<a href="${'/bookstore/shop/' + encodeURIComponent(store)}">← All books</a>
+<article class="bookstore-columns">
+  <div class="bookstore-cover" aria-hidden="true">
+    ${product.title}<span>${product.author}</span>
+  </div>
+  <div class="stack">
+    <p class="eyebrow">Chapter House / ${product.sku}</p>
+    <h1>${product.title}</h1>
+    <p class="muted">By ${product.author}</p>
+    <p>${product.description}</p>
+    <strong>$${(product.price / 100).toFixed(2)}</strong>
+    <span class="status-label">${product.stock > 0 ? product.stock + ' copies in stock' : 'Awaiting delivery'}</span>
+    <p class="notice">Catalog demonstration. This product page is server rendered; purchasing is not enabled in this chapter.</p>
+    <a href="/docs/first-page">Learn how to build a product page →</a>
+  </div>
+</article>

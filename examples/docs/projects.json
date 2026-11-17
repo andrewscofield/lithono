@@ -1,0 +1,10 @@
+{
+  "01-catalog": { "layers": ["01-catalog"], "dependencies": {} },
+  "02-delivery-preview": { "layers": ["02-delivery-preview"], "dependencies": { "zod": "^4.5.0" } },
+  "bookstore-catalog": { "layers": ["bookstore/catalog"], "dependencies": {} },
+  "bookstore-account": { "layers": ["bookstore/catalog", "bookstore/account"], "dependencies": { "better-auth": "^1.7.0", "zod": "^4.5.0" } },
+  "bookstore-editing": { "layers": ["bookstore/catalog", "bookstore/account", "bookstore/editing"], "dependencies": { "better-auth": "^1.7.0", "zod": "^4.5.0" } },
+  "bookstore-receiving": { "layers": ["bookstore/catalog", "bookstore/account", "bookstore/editing", "bookstore/receiving"], "dependencies": { "better-auth": "^1.7.0", "zod": "^4.5.0" } },
+  "bookstore-publishing": { "layers": ["bookstore/catalog", "bookstore/account", "bookstore/editing", "bookstore/receiving", "bookstore/publishing"], "dependencies": { "better-auth": "^1.7.0", "zod": "^4.5.0" } },
+  "api-lifecycle": { "layers": ["bookstore/catalog", "bookstore/account", "api-lifecycle"], "dependencies": { "better-auth": "^1.7.0", "zod": "^4.5.0", "animejs": "^4.5.0" } }
+}

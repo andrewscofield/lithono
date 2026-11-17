@@ -1,0 +1,4 @@
+.directory-detail { min-width: 0; }
+.directory-detail pre { max-width: 100%; overflow-x: auto; padding: 1rem; border: 1px solid var(--color-line); border-radius: .5rem; }
+.directory-detail details { min-width: 0; }
+.directory-detail preview-host { display: block; }

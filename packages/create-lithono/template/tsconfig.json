@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES2022", "module": "ESNext", "moduleResolution": "bundler",
+    "strict": true, "skipLibCheck": false, "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "experimentalDecorators": true, "useDefineForClassFields": false,
+    "types": ["vite/client", "node"],
+    "paths": { "@/*": ["./src/*"] }
+  },
+  "include": ["src/**/*.ts", "*.config.ts"]
+}

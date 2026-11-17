@@ -1,0 +1,60 @@
+<article class="stack">
+  <page-header title="${listing.address}"></page-header>
+  <p>${listing.location}</p>
+  <p>${listing.description}</p>
+  <lithono-if when="${listing.image}"><img src="${listing.image}" alt="Illustration, not a property photograph" width="320" height="160"></lithono-if>
+  <lithono-if when="${listing.area}"><p>Area: ${listing.area} m² · Bedrooms: ${listing.bedrooms ?? 'Not applicable'}</p></lithono-if>
+  <dl class="card__meta">
+    <div>
+      <dt>Type</dt>
+      <dd>${listing.kindLabel}</dd>
+    </div>
+    <div>
+      <dt>Status</dt>
+      <dd>${listing.statusLabel}</dd>
+    </div>
+    <lithono-if when="${listing.featured}">
+      <div>
+        <dt>Featured</dt>
+        <dd>Yes</dd>
+      </div>
+    </lithono-if>
+  </dl>
+  <listing-price price="${listing.price}"></listing-price>
+  <form class="stack" method="post" action="${actions.updatePrice.url}" data-reset-on-success>
+    <p class="notice" data-form-error hidden="${!actions.updatePrice.error}">${actions.updatePrice.error ?? ''}</p>
+    <div class="field">
+      <label for="price">Update listing price</label>
+      <input id="price" name="price" type="number" value="${actions.updatePrice.values.price ?? listing.price}">
+      <p class="field__error" data-error-for="price" hidden="${!actions.updatePrice.issue('price')}">${actions.updatePrice.issue('price') ?? ''}</p>
+    </div>
+    <div class="field">
+      <label for="reason">Reason (optional)</label>
+      <input id="reason" name="reason" value="${actions.updatePrice.values.reason ?? ''}">
+      <p class="field__error" data-error-for="reason" hidden="${!actions.updatePrice.issue('reason')}">${actions.updatePrice.issue('reason') ?? ''}</p>
+    </div>
+    <button class="btn" type="submit">Save price</button>
+  </form>
+  <form method="post" action="${actions.delete.url}" data-confirm="Delete this listing?">
+    <button class="btn btn-danger" type="submit">Delete listing</button>
+  </form>
+  <section class="stack" aria-labelledby="inquiry-title">
+    <h2 id="inquiry-title">Property inquiry</h2>
+    <p>Sign in to record an inquiry and request a receipt at your account email. These sample listings do not contact a real agent.</p>
+    <p role="status">${deliveryMessage}</p>
+    <lithono-if when="${receiptId}">
+      <form method="post" action="${actions.retryInquiry.url}">
+        <input type="hidden" name="receiptId" value="${receiptId}">
+        <button class="btn" type="submit">Retry receipt email</button>
+      </form>
+    </lithono-if>
+    <form class="stack" method="post" action="${actions.inquire.url}">
+      <input type="hidden" name="submissionKey" value="${actions.inquire.values.submissionKey ?? inquiryKey}">
+      <p data-form-error hidden="${!actions.inquire.error}">${actions.inquire.error ?? ''}</p>
+      <label for="inquiry-message">Your inquiry</label>
+      <textarea id="inquiry-message" name="message" minlength="10" maxlength="2000" required>${actions.inquire.values.message ?? ''}</textarea>
+      <p data-error-for="message" hidden="${!actions.inquire.issue('message')}">${actions.inquire.issue('message') ?? ''}</p>
+      <button class="btn" type="submit">Record inquiry</button>
+    </form>
+  </section>
+</article>

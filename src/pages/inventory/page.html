@@ -1,0 +1,16 @@
+<section class="stack">
+<inventory-view>
+  <p data-url-error role="status"></p>
+  <h1>Inventory administration</h1><p>Your workspace stock. Changes require an expected version and a reason; stale drafts must be explicitly reloaded/reapplied.</p>
+  <form method="get" action="/inventory" class="row">
+    <label>Search inventory <input name="q" value="${query.q}"></label>
+    <label>Stock status <select name="status"><option value="all">All</option><option value="low" selected="${query.status === 'low'}">Low stock</option></select></label>
+    <label>Sort inventory <select name="sort"><option value="sku">SKU</option><option value="stock" selected="${query.sort === 'stock'}">Stock</option></select></label>
+    <button type="submit">Filter inventory</button>
+  </form>
+  <p role="status">${total} items · Page ${page} of ${pages}</p>
+  <p data-form-error hidden="${!actions.adjust.error}">${actions.adjust.error ?? ''}</p>
+  <ul class="card-list"><lithono-each items="${items}" as="item" key="id"><li class="card"><h2>${item.sku} · ${item.name}</h2><p>${item.category} · Stock ${item.stock} · Threshold ${item.threshold}</p><inventory-editor .item="${item}" destination="${actions.adjust.url}"></inventory-editor></li></lithono-each></ul>
+  <div class="row"><lithono-if when="${page > 1}"><a href="${previous}">Previous inventory page</a></lithono-if><lithono-if when="${page < pages}"><a href="${next}">Next inventory page</a></lithono-if></div>
+</inventory-view>
+</section>

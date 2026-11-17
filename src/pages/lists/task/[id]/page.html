@@ -1,0 +1,17 @@
+<article class="stack">
+  <p class="crumb">
+    <a href="/lists">Lists</a>
+    <span class="crumb__sep" aria-hidden="true">/</span>
+    <a href="${listHref}">${list.name}</a>
+  </p>
+  <p class="task-card__status">${task.statusLabel}</p>
+  <h1>${task.title}</h1>
+  <div class="row">
+    <form method="post" action="${actions.toggle.url}">
+      <button class="btn" type="submit">${task.toggleLabel}</button>
+    </form>
+    <form method="post" action="${actions.delete.url}" data-confirm="Delete this task?">
+      <button class="btn btn-danger" type="submit">Delete task</button>
+    </form>
+  </div>
+</article>

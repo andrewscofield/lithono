@@ -1,0 +1,14 @@
+<h1>Receive ${data.book.title}</h1>
+<p>${data.book.stock} copies on hand</p>
+<form method="post" action="${actions.receive.url}" data-reset-on-success>
+  <input name="version" type="hidden" value="${actions.receive.values?.version ?? data.book.version}">
+  <input name="token" type="hidden" value="${actions.receive.values?.token ?? data.token}">
+  <label>Copies received <input name="quantity" type="number" min="1" max="10000" required value="${actions.receive.values?.quantity ?? 1}"></label>
+  <small data-error-for="quantity">${actions.receive.issue('quantity') ?? ''}</small>
+  <label>Delivery reference <input name="reference" required value="${actions.receive.values?.reference ?? ''}"></label>
+  <p data-form-error>${actions.receive.error ?? ''}</p>
+  <button>Receive stock</button>
+</form>
+<h2>Receiving history</h2>
+<ul>${data.receipts.map(receipt => html`<li>+${receipt.quantity} copies · ${receipt.reference}</li>`)}</ul>
+<a href="${'/admin/' + data.book.id}">Edit book</a>

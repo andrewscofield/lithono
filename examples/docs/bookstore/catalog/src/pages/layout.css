@@ -1,0 +1,12 @@
+:root { font-family: system-ui, sans-serif; color-scheme: light dark; }
+body { margin: 0; }
+header, main { max-inline-size: 52rem; margin-inline: auto; padding: 1rem; }
+header, nav { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+form { display: grid; gap: .65rem; max-inline-size: 38rem; margin-block: 1rem; }
+input, select, textarea, button { font: inherit; padding: .5rem; max-inline-size: 100%; box-sizing: border-box; }
+label { display: grid; gap: .25rem; }
+li { margin-block: 1rem; }
+small, [data-form-error] { color: light-dark(#a01818, #ffa7a7); }
+[data-form-error]:empty, [data-error-for]:empty { display: none; }
+form[aria-busy] button { opacity: .6; }
+pre { overflow: auto; }

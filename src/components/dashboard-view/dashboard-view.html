@@ -1,0 +1,27 @@
+<form method="get" action="/dashboard" class="card row">
+  ${this.unrelatedMarkup()}
+  <label for="dashboard-project">Project</label><select id="dashboard-project" name="project"><lithono-each items="${this.data?.projects ?? []}" as="project" key="id"><option value="${project.id}" selected="${project.id === this.data?.project.id}">${project.name}</option></lithono-each></select>
+  <label>Date range <select name="range"><option value="7" selected="${this.data?.query.range === '7'}">Last 7 recorded days</option><option value="30" selected="${this.data?.query.range === '30'}">Last 30 recorded days</option></select></label>
+  <button type="submit">Update dashboard</button>
+</form>
+<p role="alert" hidden="${!this.error}">${this.error}</p>
+<dashboard-summary name="${this.data?.project.name}" total="${this.data?.total}" done="${this.data?.done}" range="${this.data?.query.range}"></dashboard-summary>
+<section class="card"><h2>Completed work</h2>
+  <details open><summary>Native metric table</summary><table><thead><tr><th>Recorded day</th><th>Tasks</th></tr></thead><tbody><lithono-each items="${this.data?.metrics ?? []}" as="metric" key="day"><tr><td>${metric.day}</td><td>${metric.completed}</td></tr></lithono-each></tbody></table></details>
+  <dashboard-chart .points="${this.data?.metrics ?? []}"></dashboard-chart>
+  ${this.menuMarkup()}
+</section>
+<dashboard-status><section class="card stack"><h2>Milestones</h2>
+  <p data-status-feedback role="status"></p>
+  <lithono-each items="${this.data?.milestones ?? []}" as="milestone" key="id">
+    <form method="post" action="${this.actions().changeStatus.url}" class="row">
+      <input type="hidden" name="projectId" value="${this.data?.project.id}"><input type="hidden" name="milestoneId" value="${milestone.id}">
+      <p>${milestone.title} · ${milestone.due} · <strong>${milestone.status}</strong></p>
+      <label>${milestone.title} status <select name="status"><option value="planned" selected="${milestone.status === 'planned'}">Planned</option><option value="active" selected="${milestone.status === 'active'}">Active</option><option value="done" selected="${milestone.status === 'done'}">Done</option></select></label>
+      <button type="submit">Save ${milestone.title} status</button><p data-form-error hidden></p>
+    </form>
+  </lithono-each>
+</section></dashboard-status>
+<dashboard-notes .project="${this.data?.project}"></dashboard-notes>
+<section class="card"><h2>Recent activity</h2><ul><lithono-each items="${this.data?.activity ?? []}" as="activity" key="id"><li>${activity.message}</li></lithono-each></ul></section>
+<section class="card"><h2>Optional late enhancement</h2><p>Explicit 1.5-second browser delay, no server delay or default failure. The rest of the dashboard remains interactive. With JavaScript disabled, use the native forms above.</p>${this.delayMarkup()}</section>

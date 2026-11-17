@@ -1,0 +1,5 @@
+@import '../styles/theme.css';
+h1 {
+  color: rgb(25 70 120);
+  background-image: url('../styles/marker.svg');
+}

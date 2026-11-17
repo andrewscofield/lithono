@@ -1,0 +1,7 @@
+property-filters { display: block; }
+.property-search { display: flex; flex-wrap: wrap; gap: 1rem; align-items: end; }
+.property-search label { display: grid; gap: .3rem; flex: 1 1 10rem; }
+property-filters nav { display: flex; gap: 1rem; margin-block: 1rem; }
+property-map { display: block; }
+property-map [data-map-container] { height: 380px; width: 100%; position: relative; overflow: hidden; }
+.card img { max-width: 100%; height: auto; border-radius: .5rem; }

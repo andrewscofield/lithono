@@ -1,0 +1,4 @@
+<section class="stack"><h1>Newsletter preference</h1><p role="status">${state}</p><p>Visiting this link does not change your preference. Submit the form to confirm your choice.</p>
+  <lithono-if when="${!unsubscribe && state === 'pending'}"><form method="post" action="${actions.confirm.url}"><button type="submit">Confirm newsletter subscription</button></form></lithono-if>
+  <form method="post" action="${actions.unsubscribe.url}"><button type="submit">Unsubscribe from newsletter</button></form><a href="/community">Community publication</a>
+</section>

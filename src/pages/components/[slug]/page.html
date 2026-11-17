@@ -1,0 +1,34 @@
+<article class="directory-detail stack">
+  <a href="/components">← Component directory</a>
+  <h1>${example.name}</h1><p>${example.description}</p>
+  <p>${example.category} · ${example.authoring} · ${example.rendering} DOM · ${example.provider}</p>
+  <section class="card stack" aria-label="Working preview">
+    <h2>Working preview</h2>
+    <lithono-if when="${isStatic}"><directory-banner></directory-banner></lithono-if>
+    <lithono-if when="${!isStatic}">
+      <preview-host data-example="${example.slug}" ?manual="${manual}">
+        <button class="btn" type="button" data-activate disabled>Activate preview</button>
+        <p role="status">${manual ? 'Preview inactive. Activate when ready.' : 'Loading live preview… JavaScript is required for this interactive example.'}</p>
+        <div data-preview></div>
+      </preview-host>
+    </lithono-if>
+  </section>
+  <section class="stack"><h2>Verified scope</h2>
+    <p>${example.ssrNotes}</p><p>${example.formNotes}</p>
+    <p>Tested versions: ${example.versions}</p>
+    <p>Browser checks exercise each listed fixture. Accessibility audits, other versions and browsers are unknown.</p>
+    <a href="${example.sourceURL}">Provider / platform documentation</a>
+  </section>
+  <section class="stack"><h2>Install and import</h2>
+    <docs-code>${unsafeHTML(installHTML)}</docs-code>
+    <docs-code>${unsafeHTML(snippetHTML)}</docs-code>
+    <p>Ordinary explicit imports are supported. No global prefix or external elements mapping is required by these previews.</p>
+  </section>
+  <section class="stack"><h2>Guided public sources</h2>
+    <p>Read-only build imports from a fixed public-source manifest; filenames are explanatory labels, never filesystem request parameters. Preview host owns activation and errors; each example owns its local DOM and interaction.</p>
+    <lithono-each items="${example.sources}" as="source" key="name">
+      <details class="source-panel"><summary>${source.name}</summary><docs-code>${unsafeHTML(source.html)}</docs-code></details>
+    </lithono-each>
+  </section>
+  <p><a href="/lab">Ownership and loading lab</a> · <a href="/docs/components">Component documentation</a></p>
+</article>

@@ -1,0 +1,54 @@
+<article class="stack auth-panel">
+  <page-header title="New listing"></page-header>
+  <form class="stack" method="post" action="${actions.createListing.url}">
+    <p class="notice" data-form-error hidden="${!actions.createListing.error}">${actions.createListing.error ?? ''}</p>
+    <div class="field">
+      <label for="address">Address</label>
+      <input id="address" name="address" value="${actions.createListing.values.address ?? ''}">
+      <p class="field__error" data-error-for="address" hidden="${!actions.createListing.issue('address')}">${actions.createListing.issue('address') ?? ''}</p>
+    </div>
+    <div class="field">
+      <label for="price">Price</label>
+      <input id="price" name="price" type="number" value="${actions.createListing.values.price ?? ''}">
+      <p class="field__error" data-error-for="price" hidden="${!actions.createListing.issue('price')}">${actions.createListing.issue('price') ?? ''}</p>
+    </div>
+    <fieldset class="field field--choices">
+      <legend>Property type</legend>
+      <div class="choice-list" role="radiogroup">
+        <label class="choice" for="kind-house">
+          <input id="kind-house" name="kind" type="radio" value="house" checked="${actions.createListing.values.kind === 'house'}">
+          <span>House</span>
+        </label>
+        <label class="choice" for="kind-apartment">
+          <input id="kind-apartment" name="kind" type="radio" value="apartment" checked="${actions.createListing.values.kind === 'apartment'}">
+          <span>Apartment</span>
+        </label>
+        <label class="choice" for="kind-land">
+          <input id="kind-land" name="kind" type="radio" value="land" checked="${actions.createListing.values.kind === 'land'}">
+          <span>Land</span>
+        </label>
+      </div>
+      <p class="field__error" data-error-for="kind" hidden="${!actions.createListing.issue('kind')}">${actions.createListing.issue('kind') ?? ''}</p>
+    </fieldset>
+    <div class="field">
+      <label for="status">Status</label>
+      <div class="field__control field__control--select">
+        <select id="status" name="status">
+          <option value="" disabled hidden selected="${!actions.createListing.values.status}">Choose a status</option>
+          <option value="for-sale" selected="${actions.createListing.values.status === 'for-sale'}">For sale</option>
+          <option value="pending" selected="${actions.createListing.values.status === 'pending'}">Pending</option>
+          <option value="sold" selected="${actions.createListing.values.status === 'sold'}">Sold</option>
+        </select>
+      </div>
+      <p class="field__error" data-error-for="status" hidden="${!actions.createListing.issue('status')}">${actions.createListing.issue('status') ?? ''}</p>
+    </div>
+    <div class="field field--choice">
+      <label class="choice" for="featured">
+        <input id="featured" name="featured" type="checkbox" value="on" checked="${Boolean(actions.createListing.values.featured)}">
+        <span>Feature this listing</span>
+      </label>
+      <p class="field__error" data-error-for="featured" hidden="${!actions.createListing.issue('featured')}">${actions.createListing.issue('featured') ?? ''}</p>
+    </div>
+    <button class="btn" type="submit">Create listing</button>
+  </form>
+</article>

@@ -1,0 +1,15 @@
+<h1>${data.book.title}</h1>
+<p>${data.book.stock} copies on hand · Version ${data.book.version}</p>
+<form method="post" action="${actions.save.url}">
+  <input name="version" type="hidden" value="${actions.save.values?.version ?? data.book.version}">
+  <label>Title <input name="title" required value="${actions.save.values?.title ?? data.book.title}"></label>
+  <label>Author <input name="author" required value="${actions.save.values?.author ?? data.book.author}"></label>
+  <label>SKU <input name="sku" required value="${actions.save.values?.sku ?? data.book.sku}"></label>
+  <label>URL slug <input name="slug" required value="${actions.save.values?.slug ?? data.book.slug}"></label>
+  <label for="description">Description</label>
+  <textarea id="description" name="description" required minlength="10">${actions.save.values?.description ?? data.book.description}</textarea>
+  <label>Price in USD cents <input name="priceCents" type="number" min="0" step="1" required value="${actions.save.values?.priceCents ?? data.book.priceCents}"></label>
+  <p data-form-error>${actions.save.error ?? ''}</p>
+  <button>Save draft</button>
+</form>
+<a href="/admin">Back to your catalog</a>

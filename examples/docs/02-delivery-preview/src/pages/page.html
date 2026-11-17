@@ -1,0 +1,13 @@
+<main id="main-content" tabindex="-1">
+  <h1>Preview a delivery</h1>
+  <p>This validates a quantity. It does not save a receipt or change stock.</p>
+  <form method="post" action="${actions.preview.url}">
+    <label for="quantity">Copies received</label>
+    <input id="quantity" name="quantity" type="number" min="1" max="10000" required
+      value="${actions.preview.values?.quantity ?? data.quantity ?? 1}">
+    <small data-error-for="quantity">${actions.preview.issue('quantity') ?? ''}</small>
+    <p data-form-error>${actions.preview.error ?? ''}</p>
+    <button type="submit">Preview delivery</button>
+  </form>
+  ${data.quantity !== null ? html`<p role="status">Preview: ${data.quantity} copies. No stock changed.</p>` : nothing}
+</main>

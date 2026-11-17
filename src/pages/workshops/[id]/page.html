@@ -1,0 +1,16 @@
+<article class="stack">
+  <h1>${session.title}</h1>
+  <p>${session.description}</p>
+  <p>${time} (${session.zone}). Stored in UTC.</p>
+  <p>${session.price ? session.price + ' ' + session.currency + ' minor units per attendee · Stripe TEST only' : 'Free session'}</p>
+  <lithono-if when="${!available}"><p>Paid bookings unavailable. Configure Stripe test keys, webhook and LITHONO_APP_ORIGIN.</p></lithono-if>
+  <lithono-if when="${!signedIn}"><p><a href="/login?next=/workshops/${session.id}">Sign in to book</a></p></lithono-if>
+  <form method="post" action="${actions.book.url}" class="stack">
+    <input type="hidden" name="token" value="${actions.book.values.token ?? token}">
+    <p data-form-error hidden="${!actions.book.error}">${actions.book.error ?? ''}</p>
+    <label for="quantity">Attendees (1–6)</label>
+    <input id="quantity" name="quantity" type="number" min="1" max="6" required value="${actions.book.values.quantity ?? 1}">
+    <p data-error-for="quantity" hidden="${!actions.book.issue('quantity')}">${actions.book.issue('quantity') ?? ''}</p>
+    <button class="btn" type="submit" disabled="${!available}">${session.price ? 'Continue to test Checkout' : 'Book free places'}</button>
+  </form>
+</article>
